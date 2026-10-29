@@ -1,0 +1,41 @@
+# Builds our patched "play" image. All other services use the official upstream images.
+name: Deerstone play image
+
+on:
+  push:
+    branches: [deerstone]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # needed for git describe
+
+      - id: version
+        # e.g. v1.34.4-34-g842bab8 -> shows which upstream release the image is based on
+        # "Sync fork" on GitHub does not copy tags, so fetch them from upstream
+        run: |
+          git fetch --quiet --tags https://github.com/workadventure/workadventure.git
+          echo "tag=$(git describe --tags)" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: play/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/deerstone-germany/workadventure-play:${{ steps.version.outputs.tag }}
+            ghcr.io/deerstone-germany/workadventure-play:deerstone

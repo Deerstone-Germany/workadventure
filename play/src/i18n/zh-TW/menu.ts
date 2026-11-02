@@ -193,10 +193,10 @@ const menu: DeepPartial<Translation["menu"]> = {
         openSayPopup: "開啟「說」彈出視窗",
         openThinkPopup: "開啟「想」彈出視窗",
         walkMyDesk: "走到我的辦公桌",
-        toggleMicrophone: "Enable/disable your microphone",
-        toggleCamera: "Enable/disable your camera",
-        setShortcut: "Set shortcut",
-        pressKey: "Press a key combination…",
+        toggleMicrophone: "開啟／關閉麥克風",
+        toggleCamera: "開啟／關閉攝影機",
+        setShortcut: "設定快捷鍵",
+        pressKey: "請按下組合鍵…",
     },
 };
 

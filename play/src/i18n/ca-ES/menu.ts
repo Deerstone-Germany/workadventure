@@ -199,10 +199,10 @@ const menu: DeepPartial<Translation["menu"]> = {
         openSayPopup: "Obrir la finestra emergent en mode dir",
         openThinkPopup: "Obrir la finestra emergent en mode pensar",
         walkMyDesk: "Caminar fins al meu escriptori",
-        toggleMicrophone: "Enable/disable your microphone",
-        toggleCamera: "Enable/disable your camera",
-        setShortcut: "Set shortcut",
-        pressKey: "Press a key combination…",
+        toggleMicrophone: "Activar/Desactivar el micròfon",
+        toggleCamera: "Activar/Desactivar la càmera",
+        setShortcut: "Definir la drecera",
+        pressKey: "Premeu una combinació de tecles…",
     },
 };
 

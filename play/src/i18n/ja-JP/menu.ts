@@ -197,10 +197,10 @@ const menu: DeepPartial<Translation["menu"]> = {
         openSayPopup: "言うポップアップを開く",
         openThinkPopup: "考えるポップアップを開く",
         walkMyDesk: "私の机に移動",
-        toggleMicrophone: "Enable/disable your microphone",
-        toggleCamera: "Enable/disable your camera",
-        setShortcut: "Set shortcut",
-        pressKey: "Press a key combination…",
+        toggleMicrophone: "マイクのオン/オフ",
+        toggleCamera: "カメラのオン/オフ",
+        setShortcut: "ショートカットを設定",
+        pressKey: "キーの組み合わせを押してください…",
     },
 };
 

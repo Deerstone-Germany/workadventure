@@ -198,10 +198,10 @@ const menu: DeepPartial<Translation["menu"]> = {
         openSayPopup: 'Popup „groniś" wótcyniś',
         openThinkPopup: 'Popup „mysliś" wótcyniś',
         walkMyDesk: "K mójomu blidkoju hyś",
-        toggleMicrophone: "Enable/disable your microphone",
-        toggleCamera: "Enable/disable your camera",
-        setShortcut: "Set shortcut",
-        pressKey: "Press a key combination…",
+        toggleMicrophone: "Mikrofon zašaltowaś/wótšaltowaś",
+        toggleCamera: "Kamaru zašaltowaś/wótšaltowaś",
+        setShortcut: "Tastowu skrotconku nastajiś",
+        pressKey: "Tłocćo kombinaciju tastow…",
     },
 };
 

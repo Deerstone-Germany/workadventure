@@ -724,11 +724,21 @@ export class LiveKitRoom implements LiveKitRoomInterface {
             }
             const screenShareVideoLocalTrack = new LocalVideoTrack(screenShareVideoTrack);
             const screenShareCodec = this.getVideoCodec(true, screenShareVideoTrack);
+            // L1T3 lets livekit-client publish VP9/AV1 as real simulcast (one spatial layer per stream) on LiveKit
+            // servers above 1.13.6, so a viewer short on bandwidth gets the lower layer instead of a frozen picture.
+            // On older servers and Safari, livekit-client drops simulcast itself and sends this single L1T3 layer.
+            const svc = screenShareCodec === "vp9" || screenShareCodec === "av1";
+            if (svc) {
+                // livekit-client only sets this on its single-layer SVC path: without it Chrome caps an L1T3 screen
+                // share at ~5 fps, so set it ourselves for the simulcast path too.
+                screenShareVideoTrack.contentHint = "motion";
+            }
 
             const screenSharePublishOptions: TrackPublishOptions = {
                 source: Track.Source.ScreenShare,
                 videoCodec: screenShareCodec,
                 simulcast: true,
+                ...(svc ? { scalabilityMode: "L1T3" } : {}),
                 // Commented out: the default simulcast layers are sufficient for our use case
                 // screenShareSimulcastLayers: [ScreenSharePresets.h720fps30]
                 degradationPreference: this.getBandwidthConstrainedPreference(),

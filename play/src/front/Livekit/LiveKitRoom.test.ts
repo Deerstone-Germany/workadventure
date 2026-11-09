@@ -665,6 +665,8 @@ describe("codec demotion", () => {
         room["screenShareStreamStore"] = writable(stream);
         await room["handleScreenShareUpdate"](stream);
         expect(publishTrack.mock.calls[0][1].videoCodec).toBe("vp9");
+        expect(publishTrack.mock.calls[0][1].scalabilityMode).toBe("L1T3");
+        expect(stream.type === "success" && stream.stream?.getVideoTracks()[0].contentHint).toBe("motion");
 
         demotedCodecStore.screenSharing.set("vp9");
         room["republishScreenShare"]();
@@ -673,6 +675,7 @@ describe("codec demotion", () => {
         expect(unpublishTrack).toHaveBeenCalledOnce();
         expect(publishTrack).toHaveBeenCalledTimes(2);
         expect(publishTrack.mock.calls[1][1].videoCodec).toBe("h264");
+        expect(publishTrack.mock.calls[1][1].scalabilityMode).toBeUndefined();
     });
 
     it("unpublishes the camera for real, once, to publish it again without the demoted codec", async () => {

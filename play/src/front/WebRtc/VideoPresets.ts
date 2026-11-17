@@ -34,8 +34,12 @@ export function preferredVideoCodecs(
     transport: "P2P" | "Livekit",
 ): VideoCodec[] {
     const mobile = isAndroid() || isIOS();
+    // No AV1 on LiveKit: a Firefox viewer of an AV1 share never binds to its VP8 backup codec and sees nothing
+    // (LiveKit "track not bound after timeout"). P2P negotiates the codec per peer, so it keeps AV1.
     const candidates: VideoCodec[] =
-        category === "screenSharing" && quality !== "low" ? ["av1", "vp9", "h264"] : ["vp9", "h264"];
+        category === "screenSharing" && quality !== "low" && transport === "P2P"
+            ? ["av1", "vp9", "h264"]
+            : ["vp9", "h264"];
     if (transport === "Livekit") {
         candidates.push("vp8");
     }

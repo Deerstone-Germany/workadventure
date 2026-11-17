@@ -48,6 +48,11 @@ describe("preferredVideoCodecs", () => {
             "h264",
         ]);
         expect(preferredVideoCodecs("screenSharing", "low", "encode", 1920 * 1080, "P2P")).toEqual(["vp9", "h264"]);
+        expect(preferredVideoCodecs("screenSharing", "high", "encode", 1920 * 1080, "Livekit")).toEqual([
+            "vp9",
+            "h264",
+            "vp8",
+        ]);
         expect(preferredVideoCodecs("video", "high", "encode", 1280 * 720, "P2P")).toEqual(["vp9", "h264"]);
     });
 

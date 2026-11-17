@@ -1,4 +1,4 @@
-# Builds our patched "play" image. All other services use the official upstream images.
+# Builds our patched images. back must match play: both speak the same protobuf protocol (spaceStateQuery etc.).
 name: Deerstone play image
 
 on:
@@ -13,6 +13,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        service: [play, back]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,8 +37,8 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           context: .
-          file: play/Dockerfile
+          file: ${{ matrix.service }}/Dockerfile
           push: true
           tags: |
-            ghcr.io/deerstone-germany/workadventure-play:${{ steps.version.outputs.tag }}
-            ghcr.io/deerstone-germany/workadventure-play:deerstone
+            ghcr.io/deerstone-germany/workadventure-${{ matrix.service }}:${{ steps.version.outputs.tag }}
+            ghcr.io/deerstone-germany/workadventure-${{ matrix.service }}:deerstone
